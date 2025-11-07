@@ -12,17 +12,17 @@ Create a `.env` file in the root of the project with the following variables:
 
 ```env
 # MongoDB connection URL
-mongo_url=your_mongodb_connection_url
+mongo_url=mongodb://localhost:27017/demo1
 
 # Server port
 port=3000
 
 # Email credentials
-EMAIL_USER=your_email@example.com
-EMAIL_PASS=your_email_password
+EMAIL_USER=sujikar20133239@gmail.com
+EMAIL_PASS=jieq zdhx fvdn uqqn
 
 # JWT secret key
-JWT_SECRET=your_jwt_secret_key
+JWT_SECRET=FD2A7D19774CB929448547B61BFFC
 
 Important: Do NOT commit your .env file to GitHub. Make sure .gitignore includes .env.
 
