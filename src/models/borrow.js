@@ -14,7 +14,7 @@ const borrowReturnSchema = new mongoose.Schema({
     default: "borrowed",
   },
   duedate: { type: Date, required: true },
-  phonenumber: { type: Number, required: true },
+  phoneno: { type: Number, required: true },
 
   returndate: { type: Date },
   returnapprovedby: { type: mongoose.Schema.ObjectId, ref: employee },
@@ -32,80 +32,3 @@ const borrowReturnSchema = new mongoose.Schema({
 
 const BorrowReturn = mongoose.model("BorrowReturn", borrowReturnSchema);
 export default BorrowReturn;
-
-// ObjectId References
-// - approveid → ref: user
-// - bookid → ref: books
-// - studendid → ref: register
-// - returnapprovedby → ref: user
-// - renewdapprovedby → ref: user
-// - renewhistory.approveby → ref: user
-// - updatedby → ref: user
-
-// Date Fields
-// - borrowdate
-// - returndate
-// - expectedreturndate
-// - renewdate
-// - renewhistory.renewdate
-// - renewhistory.newduedate
-// - penalty.paiddate
-
-// String Fields
-// - status → enum: ["borrowed", "returned", "lost", "renewed"]
-// - penalty.reason
-// - penalty.status → enum: ["Unpaid", "Paid"]
-// - penalty.paymentmethod
-
-// Number Fields
-// - phonenumber
-// - noofdays
-// - penalty.amount
-
-// Boolean Fields
-// - penalty.haspeanlty
-
-// Array Fields
-// - renewhistory → contains objects with:
-//     - renewdate
-//     - newduedate
-//     - approveby
-
-// Model Name
-// - Model: "Borrow&return"
-
-// const borrowReturnSchema = new mongoose.Schema({
-//   bookid: { type: mongoose.Schema.ObjectId, ref: books },
-//   studendid: { type: mongoose.Schema.ObjectId, ref: Student},
-//   returnapprovedby: { type: mongoose.Schema.ObjectId, ref: employee },
-//   renewdapprovedby: { type: mongoose.Schema.ObjectId, ref: employee },
-//   updatedby: { type: mongoose.Schema.ObjectId, ref: employee },
-
-//   phonenumber: { type: Number },
-//   noofdays: { type: Number },
-//   borrowdate: { type: Date },
-//   expectedreturndate: { type: Date },
-//   renewdate: { type: Date },
-//   returndate: { type: Date },
-//   status: {
-//     type: String,
-//     enum: ["borrowed", "returned", "lost", "renewed"],
-//     default: "borrowed",
-//   },
-//   penalty: penaltySchema,
-//   renewhistory: [renewhistorySchema],
-// });
-
-// const penaltySchema = new mongoose.Schema({
-//   haspeanlty: { type: Boolean, default: false },
-//   reason: { type: Number },
-//   paymentmethod: { type: String },
-//   status: { type: String, enum: ["Unpaid", "Paid"] },
-//   paiddate: { type: Date },
-// });
-
-// const renewhistorySchema = new mongoose.Schema({
-//   renewdate: { type: Date },
-//   newduedate: { type: Date },
-//   approveby: { type: mongoose.Schema.ObjectId, ref: employee },
-// });
