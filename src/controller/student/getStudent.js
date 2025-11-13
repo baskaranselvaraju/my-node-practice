@@ -3,6 +3,12 @@ import Student from "../../models/student.js";
 
 const getStudent = async (req, res) => {
   try {
+    const role = req.user.role; // it is get from middlewere request
+    if (role !== "staff") {
+      return res
+        .status(500)
+        .json({ success: false, message: "Access denied only staff can see " });
+    }
     const student = await Student.find().select("-password");
 
     if (student.length === 0) {

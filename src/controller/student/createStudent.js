@@ -1,17 +1,25 @@
 import express from "express";
 import bcrypt from "bcrypt";
 import Student from "../../models/student.js";
-import nodemailer, { createTransport } from "nodemailer";
+import nodemailer from "nodemailer";
 import generateToken from "../../util/generateToken.js";
-import cookieParser from "cookie-parser";
 
 const createStudent = async (req, res) => {
   try {
-    const { name, email, phoneno, dept, password, bloodgroup, limit } =
-      req.body;
-
+    const {
+      name,
+      registerno,
+      email,
+      phoneno,
+      dept,
+      password,
+      bloodgroup,
+      role,
+      limit
+    } = req.body;
+    
     // validate required fields (optional but recommended)
-    if (!name || !email || !phoneno || !dept || !password) {
+    if (!name || !email || !phoneno || !dept || !password || !registerno) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
@@ -27,10 +35,14 @@ const createStudent = async (req, res) => {
     const hashPassword = await bcrypt.hash(password, 10);
     const register = new Student({
       name,
+      registerno,
       email,
       password: hashPassword,
       phoneno,
       dept,
+      bloodgroup,
+      role,
+      limit
     });
 
     await register.save();
@@ -38,7 +50,7 @@ const createStudent = async (req, res) => {
     const token = generateToken(register._id);
 
     // Step 1: Create transporter
-    const transporter = createTransport({
+    const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
         user: process.env.EMAIL_USER,
@@ -46,7 +58,7 @@ const createStudent = async (req, res) => {
       },
     });
 
-   // ✅ Step 2: Prepare email content
+    // ✅ Step 2: Prepare email content
     const textMessage = `Hi ${name},\n\n\tThank you for registering your details.`;
     const htmlMessage = `<p>Hi ${name},</p><p>Thank you for registering your details.</p>`;
 
@@ -66,7 +78,6 @@ const createStudent = async (req, res) => {
       token,
       register,
     });
-
   } catch (error) {
     console.error("Error creating student:", error);
     res

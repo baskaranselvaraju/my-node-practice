@@ -2,10 +2,9 @@ import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./src/config/dbConfig.js";
 import std from "./src/router/studentRoute.js";
-import Student from "./src/models/student.js";
 import movieRouter from "./src/router/movieRoute.js";
-import Movie from "./src/models/movie.js";
 import roomRouter from "./src/router/roomRoute.js";
+import loginRouter from "./src/router/loginRoute.js"
 import cookieParser from "cookie-parser";
 
 dotenv.config();
@@ -15,6 +14,7 @@ connectDB();
 app.use(express.json());
 app.use(cookieParser());
 app.use("/api/student/v1", std);
+app.use("/api/login/v1", loginRouter);
 
 // app.get('/api/movie/v1', async (req, res) => {
 //   const movie = await Movie.find();

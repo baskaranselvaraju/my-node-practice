@@ -4,11 +4,16 @@ import bcrypt from "bcrypt";
 
 const updateStudent = async (req, res) => {
   try {
-    const { name, email, phoneno, dept, password,bloodgroup,limit } = req.body;
+    const { name, email, phoneno, dept, password} =
+      req.body;
     const { id } = req.params;
     // validate required fields (optional but recommended)
     if (!name || !email || !phoneno || !dept || !password) {
       return res.status(400).json({ message: "All fields are required" });
+    }
+    const existing = await Student.find(id);
+    if (existing.limit !== 3) {
+      return res.status(400).json({ message: "return borrowed book to update data" });
     }
 
     const hashPassword = await bcrypt.hash(password, 10);
@@ -17,9 +22,7 @@ const updateStudent = async (req, res) => {
       email,
       password: hashPassword,
       phoneno,
-      dept,
-      bloodgroup,
-      limit
+      dept
     };
 
     const updateData = await Student.findByIdAndUpdate(id, register, {

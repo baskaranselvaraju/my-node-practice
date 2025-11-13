@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import Student from "../models/student.js";
+import employee from "../models/employee.js";
 
 const protect = async (req, res, next) => {
   try {
@@ -30,7 +31,7 @@ const protect = async (req, res, next) => {
     if (!req.student) {
       return res.status(401).json({ message: "Student not found" });
     }
-
+    req.user = req.student;
     next();
   } catch (error) {
     console.error("JWT verification failed:", error);
