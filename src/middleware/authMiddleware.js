@@ -6,11 +6,11 @@ const protect = async (req, res, next) => {
   try {
     let token;
 
-    // ✅ Try from cookies first
+    // Try from cookies first
     if (req.cookies && req.cookies.token) {
       token = req.cookies.token;
     }
-    // ✅ Or try from Authorization header
+    // Or try from Authorization header
     else if (
       req.headers.authorization &&
       req.headers.authorization.startsWith("Bearer")
@@ -25,13 +25,20 @@ const protect = async (req, res, next) => {
     // Verify JWT
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // Attach student (without password)
-    req.student = await Student.findById(decoded.id).select("-password");
-
-    if (!req.student) {
-      return res.status(401).json({ message: "Student not found" });
+    let user;
+    if (decoded.role === "student") {
+      user = await Student.findById(decoded.id).select("-password");
+    } else if (decoded.role === "employee") {
+      user = await employee.findById(decoded.id).select("-password");
+    } else {
+      return res.status(401).json({ success: false, message: "Invalid user role" });
     }
-    req.user = req.student;
+
+     if (!user) {
+      return res.status(401).json({ success: false, message: "User not found" });
+    }
+    req.user = user;        // user document (without password)
+    req.user.role = decoded.role; // attach role
     next();
   } catch (error) {
     console.error("JWT verification failed:", error);

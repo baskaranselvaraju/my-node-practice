@@ -1,16 +1,10 @@
 import express from "express";
-import Student from "../../models/student.js";
+import employee from "../../models/employee.js";
 
-const getStudent = async (req, res) => {
+const getEmployee = async (req, res) => {
   try {
-    const role = req.user.role;
-    const id =req.user.id;
-    let data;
-    if (role === "student") {
-      data = await Student.find({_id:id}).select("-password");
-    } else {
-      data = await Student.find().select("-password");
-    }
+
+    const data = await employee.find().select("-password");
 
     if (data.length === 0) {
       return res.status(200).json({
@@ -21,7 +15,7 @@ const getStudent = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "Student data recieved successfully",
+      message: "Employee data recieved successfully",
       data: data,
     });
   } catch (error) {
@@ -32,4 +26,4 @@ const getStudent = async (req, res) => {
   }
 };
 
-export default getStudent;
+export default getEmployee;

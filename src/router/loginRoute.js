@@ -1,6 +1,6 @@
 import express from "express";
-import loginStudent from "../controller/student/loginStudent.js";
-import logoutStudent from "../controller/student/logoutStudent.js";
+import loginStudent from "../controller/login/loginStudent.js";
+import logoutStudent from "../controller/login/logoutStudent.js";
 
 const router = express.Router();
 
