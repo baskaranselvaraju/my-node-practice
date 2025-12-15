@@ -97,3 +97,44 @@ findLargest(10,4,8)
 for (let i = 1; i <= 10; i++) {
   console.log(i);
 }
+
+
+//palindrome -a word or number that reads the same forward and backward
+function polindrom(n){
+const str=n.toString()
+return str===str.split("").reverse().join("");
+
+}
+console.log(polindrom(121))
+
+function isPolindrom(str){
+str=str.toLowerCase().replace(/[^a-z0-9]/g, "")
+return str===str.split("").reverse().join("");
+
+}
+console.log(isPolindrom("Racecar"))
+console.log(isPolindrom("Hello"))
+
+
+// facorial number
+function factorial(n){
+    if(n===0){
+        return 1
+    }
+    return n * factorial(n-1)
+}
+console.log(factorial(5));
+
+
+// revers string
+
+
+function reverseString(str) {
+  if (str === "") {
+    return ""
+  }
+  else
+    return reverseString(str.substr(1)) + str.charAt(0)
+}
+
+console.log(reverseString("hello"))

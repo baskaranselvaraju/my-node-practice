@@ -13,6 +13,7 @@ const bookschema = new mongoose.Schema({
   availablecopies: { type: Number, required: true },
   status: { type: String, default: "available" },
   date: { type: Date, required: true },
+  // price : {type: number, default:150},
   addedby: {
     type: mongoose.Schema.ObjectId,
     ref: employee

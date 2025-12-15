@@ -1,5 +1,5 @@
 import express from "express";
-import Books from "../../models/books";
+import Books from "../../models/books.js";
 
 const deleteBook = async (req, res) => {
   try {

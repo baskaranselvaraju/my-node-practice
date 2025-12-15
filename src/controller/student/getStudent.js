@@ -7,7 +7,7 @@ const getStudent = async (req, res) => {
     const id =req.user.id;
     let data;
     if (role === "student") {
-      data = await Student.find({_id:id}).select("-password");
+      data = await Student.findOne({_id:id}).select("-password");
     } else {
       data = await Student.find().select("-password");
     }

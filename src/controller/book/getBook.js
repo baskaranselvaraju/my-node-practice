@@ -1,9 +1,9 @@
 import express from "express";
-import Books from "../../models/books";
+import Books from "../../models/books.js";
 
 const getBook = async (req, res) => {
   try {
-    const data = await getBook.find().select("-password");
+    const data = await Books.find().select("-password");
 
     if (data.length === 0) {
       return res.status(200).json({
